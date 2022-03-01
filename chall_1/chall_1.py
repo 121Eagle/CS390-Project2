@@ -17,3 +17,10 @@ p.sendline(main_payload)
 print(str(main_payload, encoding="ascii"))
 print(p.recvline())
 p.interactive()
+
+
+def challenge_1():
+    c1_payload = bytearray()
+    c1_payload += b"The Mysterious Benidict Society"
+    assert len(c1_payload) < 28, "help the payload is too long"
+    c1_payload += b"a" * (28 - len(c1_payload))
